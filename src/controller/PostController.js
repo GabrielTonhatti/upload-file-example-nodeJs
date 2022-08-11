@@ -1,5 +1,10 @@
+import path from "path";
+import { fileURLToPath } from "url";
+import parentLogger from "../config/logger/logger.js";
 import Post from "../models/Post.js";
-import logger from "../config/logger/logger.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const logger = parentLogger.child({ filename: path.basename(__filename) });
 
 class PostController {
     async findAll(req, res) {

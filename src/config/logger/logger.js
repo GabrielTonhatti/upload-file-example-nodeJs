@@ -1,23 +1,23 @@
 import pino from "pino";
-import moment from "moment-timezone";
+import { fileURLToPath } from "url";
+import path from "path";
 
-const DATA_TIME_FORMAT = "DD/MM/yyyy HH:mm:ss";
-const TIME_ZONE = "America/Sao_Paulo";
+const __filename = fileURLToPath(import.meta.url);
 
 const logger = pino({
     name: "application upload example",
     level: "info",
     transport: {
-        target: "pino-pretty",
+        target: "./pino-pretty-transport",
         options: {
             colorize: true,
             levelFirst: true,
             sync: true,
-            translateTime: `"time": ${moment()
-                .tz(TIME_ZONE)
-                .format(DATA_TIME_FORMAT)}`,
+            translateTime: true,
+            singleLine: false,
+            ignore: "pid,hostname,filename",
         },
     },
-});
+}).child({ filename: path.basename(__filename) });
 
 export default logger;
