@@ -12,7 +12,10 @@ const logger = pino({
         options: {
             colorize: true,
             levelFirst: true,
-            translateTime: `${moment().tz(TIME_ZONE).format(DATA_TIME_FORMAT)}`,
+            sync: true,
+            translateTime: `"time": ${moment()
+                .tz(TIME_ZONE)
+                .format(DATA_TIME_FORMAT)}`,
         },
     },
 });
