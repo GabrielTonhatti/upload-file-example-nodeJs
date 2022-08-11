@@ -1,10 +1,9 @@
 import "dotenv/config.js";
-
 import express from "express";
 import morgan from "morgan";
-import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
+import "./config/database/Mongo.js";
 import routes from "./routes.js";
 import Utils from "./utils/Utils.js";
 
@@ -12,23 +11,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const logger = Utils.getLoggerWithPathFile(__filename);
-
-/**
- * Database setup
- */
-logger.info("Connecting to MongoDB...");
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-});
-mongoose.connection.on("connected", () =>
-    logger.info("Connected to MongoDB ✅")
-);
-mongoose.connection.on("error", () =>
-    logger.error("Error connecting to MongoDB ❌")
-);
-mongoose.connection.on("disconnected", () =>
-    logger.info("Disconnecting to MongoDB...")
-);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
