@@ -36,6 +36,4 @@ app.use(
 
 app.use(require("./routes"));
 
-const server = app.listen(3000, () =>
-    logger.info(`Servidor iniciado em ${process.env.APP_URL}`)
-);
+app.listen(3000, () => logger.info(`Server running on ${process.env.APP_URL}`));
