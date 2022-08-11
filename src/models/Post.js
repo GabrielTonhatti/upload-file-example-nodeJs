@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const aws = require("aws-sdk");
-const fs = require("fs");
-const path = require("path");
-const { promisify } = require("util");
+import mongoose from "mongoose";
+import aws from "aws-sdk";
+import fs from "fs";
+import path from "path";
+import { promisify } from "util";
 
 const s3 = new aws.S3();
 
@@ -38,4 +38,4 @@ PostSchema.pre("remove", function () {
     }
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+export default mongoose.model("Post", PostSchema);

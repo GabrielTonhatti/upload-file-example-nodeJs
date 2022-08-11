@@ -1,11 +1,13 @@
-const routes = require("express").Router();
-const multer = require("multer");
-const multerConfig = require("./config/multer");
+import { Router } from "express";
+import multer from "multer";
+import multerConfig from "./config/multer.js";
 
-const PostController = require("./controller/PostController");
+import postController from "./controller/PostController.js";
 
-routes.get("/posts", PostController.findAll);
-routes.post("/posts", multer(multerConfig).single("file"), PostController.save);
-routes.delete("/posts/:id", PostController.deleteById);
+const routes = Router();
+routes.get("/posts", postController.findAll);
+routes.post("/posts", multer(multerConfig).single("file"), postController.save);
+routes.delete("/posts/:id", postController.deleteById);
+routes.all("*", postController.notAcceptable);
 
-module.exports = routes;
+export default routes;

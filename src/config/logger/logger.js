@@ -1,5 +1,5 @@
-const pino = require("pino");
-const moment = require("moment-timezone");
+import pino from "pino";
+import moment from "moment-timezone";
 
 const DATA_TIME_FORMAT = "DD/MM/yyyy HH:mm:ss";
 const TIME_ZONE = "America/Sao_Paulo";
@@ -17,4 +17,4 @@ const logger = pino({
     },
 });
 
-module.exports = logger;
+export default logger;

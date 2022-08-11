@@ -1,4 +1,5 @@
-const Post = require("../models/Post");
+import Post from "../models/Post.js";
+import logger from "../config/logger/logger.js";
 
 class PostController {
     async findAll(req, res) {
@@ -17,16 +18,34 @@ class PostController {
             url,
         });
 
+        logger.info(`Post ${post._id} saved successfully.`);
+
         return res.json(post);
     }
 
     async deleteById(req, res) {
-        const post = await Post.findById(req.params.id);
+        try {
+            const post = await Post.findById(req.params.id);
 
-        await post.remove();
+            await post.remove();
 
-        return res.send();
+            logger.info(`Post ${post._id} deleted successfully.`);
+
+            return res.status(204).send();
+        } catch (error) {
+            logger.error(error.message);
+
+            return res.status(404).json({
+                message: `Post de id ${req.params.id} não encontrado.`,
+            });
+        }
+    }
+
+    notAcceptable(req, res) {
+        return res.status(404).json({
+            message: `A URL ${req.url} não aceita o método ${req.method}.`,
+        });
     }
 }
 
-module.exports = new PostController();
+export default new PostController();
