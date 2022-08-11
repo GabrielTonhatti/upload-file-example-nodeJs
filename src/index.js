@@ -5,17 +5,13 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
-import parentLogger from "./config/logger/logger.js";
 import routes from "./routes.js";
+import Utils from "./utils/Utils.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const logger = parentLogger.child({
-    filename: `${path.dirname(
-        __filename.substring(__filename.indexOf("src"))
-    )}/${path.basename(__filename)}`,
-});
+const logger = Utils.getLoggerWithPathFile(__filename);
 
 /**
  * Database setup
