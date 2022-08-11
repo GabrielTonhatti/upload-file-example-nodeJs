@@ -23,7 +23,7 @@ mongoose.connection.on("error", () =>
     logger.error("Error connecting to MongoDB ❌")
 );
 mongoose.connection.on("disconnected", () =>
-    logger.info("Disconnecting to MongoDB ...")
+    logger.info("Disconnecting to MongoDB...")
 );
 
 app.use(express.json());
