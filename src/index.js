@@ -11,7 +11,11 @@ import routes from "./routes.js";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const logger = parentLogger.child({ filename: path.basename(__filename) });
+const logger = parentLogger.child({
+    filename: `${path.dirname(
+        __filename.substring(__filename.indexOf("src"))
+    )}/${path.basename(__filename)}`,
+});
 
 /**
  * Database setup

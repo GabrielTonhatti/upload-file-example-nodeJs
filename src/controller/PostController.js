@@ -4,7 +4,11 @@ import parentLogger from "../config/logger/logger.js";
 import Post from "../models/Post.js";
 
 const __filename = fileURLToPath(import.meta.url);
-const logger = parentLogger.child({ filename: path.basename(__filename) });
+const logger = parentLogger.child({
+    filename: `${path.dirname(
+        __filename.substring(__filename.indexOf("src"))
+    )}/${path.basename(__filename)}`,
+});
 
 class PostController {
     async findAll(req, res) {
