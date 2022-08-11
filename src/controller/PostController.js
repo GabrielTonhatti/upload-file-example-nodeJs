@@ -45,9 +45,9 @@ class PostController {
         }
     }
 
-    notAcceptable(req, res) {
+    notFound(req, res) {
         return res.status(404).json({
-            message: `A URL ${req.url} não aceita o método ${req.method}.`,
+            message: `A URL ${req.url} não existe ou não aceita o método ${req.method}.`,
         });
     }
 }

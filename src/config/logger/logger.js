@@ -5,7 +5,7 @@ import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 
 const logger = pino({
-    name: "application upload example",
+    name: "upload example",
     level: "info",
     transport: {
         target: "./pino-pretty-transport",
@@ -15,7 +15,7 @@ const logger = pino({
             sync: true,
             translateTime: true,
             singleLine: false,
-            ignore: "pid,hostname,filename",
+            ignore: "pid,filename",
         },
     },
 }).child({ filename: path.basename(__filename) });

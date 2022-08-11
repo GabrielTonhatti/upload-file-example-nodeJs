@@ -6,12 +6,14 @@ import { fileURLToPath } from "url";
 import "./config/database/Mongo.js";
 import routes from "./routes.js";
 import Utils from "./utils/Utils.js";
+import cors from "cors";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const logger = Utils.getLoggerWithPathFile(__filename);
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));

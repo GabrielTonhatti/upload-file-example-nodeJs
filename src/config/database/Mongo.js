@@ -12,6 +12,7 @@ logger.info("Connecting to MongoDB...");
 mongoose
     .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
+        useUnifiedTopology: true,
     })
     .then(() => logger.info("Connected to MongoDB ✅"))
     .catch((error) => {

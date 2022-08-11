@@ -8,6 +8,6 @@ const routes = Router();
 routes.get("/posts", postController.findAll);
 routes.post("/posts", multer(multerConfig).single("file"), postController.save);
 routes.delete("/posts/:id", postController.deleteById);
-routes.all("*", postController.notAcceptable);
+routes.all("*", postController.notFound);
 
 export default routes;
