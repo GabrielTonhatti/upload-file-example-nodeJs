@@ -1,4 +1,3 @@
-const moment = require("moment-timezone");
 const PinoPretty = require("pino-pretty");
 const Utils = require("../../utils/Utils");
 
