@@ -2,9 +2,12 @@ import mongoose from "mongoose";
 import aws from "aws-sdk";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { promisify } from "util";
 
 const s3 = new aws.S3();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PostSchema = new mongoose.Schema({
     name: String,

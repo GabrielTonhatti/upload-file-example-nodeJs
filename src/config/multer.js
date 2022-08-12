@@ -4,6 +4,7 @@ import crypto from "crypto";
 import aws from "aws-sdk";
 import multerS3 from "multer-s3";
 import { fileURLToPath } from "url";
+import Utils from "../utils/Utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,7 +44,7 @@ export default {
     dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
     storage: storageTypes[process.env.STORAGE_TYPE],
     limits: {
-        fileSize: 2 * 1024 * 1024,
+        fileSize: Utils.MAX_FILE_SIZE,
     },
     fileFilter: (req, file, cb) => {
         const allowedMimes = [
