@@ -1,10 +1,8 @@
-import { fileURLToPath } from "url";
-import Post from "../models/Post.js";
-import Utils from "../utils/Utils.js";
-import multer from "multer";
-import multerConfig from "../config/multer.js";
+const Post = require("../models/Post");
+const Utils = require("../utils/Utils");
+const multer = require("multer");
+const multerConfig = require("../config/multer");
 
-const __filename = fileURLToPath(import.meta.url);
 const logger = Utils.getLoggerWithPathFile(__filename);
 
 class PostController {
@@ -97,4 +95,4 @@ class PostController {
     }
 }
 
-export default new PostController();
+module.exports = new PostController();

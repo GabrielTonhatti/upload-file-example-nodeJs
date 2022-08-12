@@ -1,8 +1,5 @@
-import pino from "pino";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
+const pino = require("pino");
+const path = require("path");
 
 const logger = pino({
     name: "upload example",
@@ -20,4 +17,4 @@ const logger = pino({
     },
 }).child({ filename: path.basename(__filename) });
 
-export default logger;
+module.exports = logger;

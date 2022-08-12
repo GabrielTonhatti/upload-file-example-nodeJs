@@ -1,17 +1,13 @@
-import moment from "moment-timezone";
-import PinoPretty from "pino-pretty";
+const moment = require("moment-timezone");
+const PinoPretty = require("pino-pretty");
+const Utils = require("../../utils/Utils");
 
-const DATA_TIME_FORMAT = "DD/MM/yyyy HH:mm:ss";
-const TIME_ZONE = "America/Sao_Paulo";
-const getCurrentDateTime = () =>
-    moment().tz(TIME_ZONE).format(DATA_TIME_FORMAT);
-
-export default (opts) =>
+module.exports = (opts) =>
     PinoPretty({
         ...opts,
         messageFormat: "{filename}: {msg}",
         customPrettifiers: {
-            time: () => `[time: ${getCurrentDateTime()}]`,
+            time: () => `[time: ${Utils.getCurrentDateTime()}]`,
             pid: (pid) => `pid: ${pid}`,
         },
     });

@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
-import Utils from "../../utils/Utils.js";
-import { fileURLToPath } from "url";
+const mongoose = require("mongoose");
+const Utils = require("../../utils/Utils");
 
-const __filename = fileURLToPath(import.meta.url);
 const logger = Utils.getLoggerWithPathFile(__filename);
 logger.info("Connecting to MongoDB...");
 

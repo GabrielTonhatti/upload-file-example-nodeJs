@@ -1,16 +1,13 @@
-import "dotenv/config.js";
-import express from "express";
-import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url";
-import "./config/database/Mongo.js";
-import routes from "./routes.js";
-import Utils from "./utils/Utils.js";
-import cors from "cors";
+require("dotenv").config();
+const express = require("express");
+const morgan = require("morgan");
+const path = require("path");
+require("./config/database/Mongo");
+const routes = require("./routes");
+const Utils = require("./utils/Utils");
+const cors = require("cors");
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const logger = Utils.getLoggerWithPathFile(__filename);
 
 app.use(cors());
