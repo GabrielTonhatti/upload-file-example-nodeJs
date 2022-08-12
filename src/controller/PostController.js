@@ -19,11 +19,15 @@ class PostController {
 
         return uploadedMulter(req, res, async (error) => {
             try {
-                if (error) {
+                if (error instanceof multer.MulterError) {
                     throw new Error(
                         `Tamanho máximo permitido para a imagem é de ${Utils.MAX_FILE_SIZE_MB.toFixed(
                             0
                         )} MB.`
+                    );
+                } else if (error) {
+                    throw new Error(
+                        `Tipo de arquivo não permitido. Somente é aceito arquivos do tipo .jpg, .jpeg, .png e .gif.`
                     );
                 }
 
@@ -47,9 +51,7 @@ class PostController {
 
                 return res.json(post);
             } catch (error) {
-                logger.error(
-                    `Error saving file ${res.file.originalname}: ${error.message}`
-                );
+                logger.error(`Error saving file: ${error.message}`);
 
                 return res.status(404).json({ message: error.message });
             }

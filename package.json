@@ -6,6 +6,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon --trace-warnings src/index.js",
+        "debug": "nodemon --trace-warnings --inspect src/index.js",
         "start": "node src/index.js"
     },
     "dependencies": {
