@@ -1,33 +1,25 @@
 const pino = require("pino");
-const path = require("path");
+const moment = require("moment-timezone");
 
-const enviroment = process.env.NODE_ENV;
+const getCurrentDateTime = () => {
+    const DATA_TIME_FORMAT = "DD/MM/yyyy HH:mm:ss";
+    const TIME_ZONE = "America/Sao_Paulo";
 
-let logger;
+    return moment().tz(TIME_ZONE).format(DATA_TIME_FORMAT);
+};
 
-if (enviroment !== "production") {
-    logger = pino({
-        name: "upload example",
-        level: "info",
-        transport: {
-            target: "./pino-pretty-transport",
-            options: {
-                colorize: true,
-                levelFirst: true,
-                sync: true,
-                translateTime: true,
-                singleLine: false,
-                ignore: "pid,filename",
-            },
-        },
-    });
-} else {
-    logger = pino({
-        name: "upload example",
-        level: "info",
-    });
-}
-
-logger.child({ filename: path.basename(__filename) });
+const logger = pino({
+    name: "upload example",
+    level: "info",
+    timestamp: () => `,"time":"${getCurrentDateTime()}"`,
+    prettyPrint: {
+        colorize: true,
+        levelFirst: true,
+        sync: true,
+        timestampKey: "time",
+        messageKey: "msg",
+        levelFirst: false,
+    },
+});
 
 module.exports = logger;
