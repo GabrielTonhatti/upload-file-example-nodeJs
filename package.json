@@ -4,9 +4,9 @@
     "main": "src/index.js",
     "license": "MIT",
     "scripts": {
-        "dev": "nodemon --trace-warnings src/index.js",
-        "debug": "nodemon --trace-warnings --inspect src/index.js",
-        "start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 src/index.js"
+        "dev": "NODE_ENV=dev nodemon --trace-warnings src/index.js",
+        "debug": "NODE_ENV=dev nodemon --trace-warnings --inspect src/index.js",
+        "start": "NODE_ENV=production node src/index.js"
     },
     "dependencies": {
         "aws-sdk": "^2.390.0",
