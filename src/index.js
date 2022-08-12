@@ -21,4 +21,6 @@ app.use(
 
 app.use(routes);
 
-app.listen(3000, () => logger.info(`Server running on ${process.env.APP_URL}`));
+app.listen(process.env.PORT || 3000, () =>
+    logger.info(`Server running on ${process.env.APP_URL}`)
+);
