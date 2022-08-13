@@ -33,28 +33,28 @@ PostSchema.pre("save", function (): void {
     }
 });
 
-PostSchema.pre("remove", function ():
-    | Promise<void>
-    | Promise<PromiseResult<DeleteObjectOutput, AWSError>> {
-    if (process.env.STORAGE_TYPE === "s3") {
-        return s3
-            .deleteObject({
-                Bucket: <string>process.env.BUCKET_NAME,
-                Key: <string>this.key,
-            })
-            .promise();
-    } else {
-        return promisify(fs.unlink)(
-            path.resolve(
-                __dirname,
-                "..",
-                "..",
-                "tmp",
-                "uploads",
-                <string>this.key
-            )
-        );
-    }
-});
+// PostSchema.pre("remove", function ():
+//     | Promise<void>
+//     | Promise<PromiseResult<DeleteObjectOutput, AWSError>> {
+//     if (process.env.STORAGE_TYPE === "s3") {
+//         return s3
+//             .deleteObject({
+//                 Bucket: <string>process.env.BUCKET_NAME,
+//                 Key: <string>this.key,
+//             })
+//             .promise();
+//     } else {
+//         return promisify(fs.unlink)(
+//             path.resolve(
+//                 __dirname,
+//                 "..",
+//                 "..",
+//                 "tmp",
+//                 "uploads",
+//                 <string>this.key
+//             )
+//         );
+//     }
+// });
 
 export default model<PostInteface>("Post", PostSchema);

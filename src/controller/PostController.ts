@@ -70,12 +70,12 @@ class PostController {
         try {
             const id: string = req.params.id;
             const post: PostInteface | null = await Post.findById(id);
-            const { key } = post;
 
             if (!post) {
                 throw new Error(`Arquivo de id ${id} não encontrado.`);
             }
 
+            const { key } = <PostInteface>post;
             await post.remove();
 
             if (post.$isDeleted()) {
@@ -92,7 +92,7 @@ class PostController {
                             "..",
                             "tmp",
                             "uploads",
-                            <string>this.key
+                            <string>key
                         )
                     );
                 }

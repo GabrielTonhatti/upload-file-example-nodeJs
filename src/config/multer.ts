@@ -47,7 +47,7 @@ const storageTypes: StorageType = {
             },
             region: <string>process.env.AWS_DEFAULT_REGION,
         }),
-        bucket: "",
+        bucket: <string>process.env.BUCKET_NAME,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: "public-read",
         key: (
@@ -69,7 +69,7 @@ const storageTypes: StorageType = {
 const storageType: string = <string>process.env.STORAGE_TYPE;
 export default {
     dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
-    storage: storageTypes[`local`],
+    storage: storageTypes[`s3`],
     limits: {
         fileSize: Utils.MAX_FILE_SIZE,
     },
