@@ -1,25 +1,23 @@
-const pino = require("pino");
-const moment = require("moment-timezone");
+import pino, { Logger } from "pino";
+import moment from "moment-timezone";
 
-const getCurrentDateTime = () => {
-    const DATA_TIME_FORMAT = "DD/MM/yyyy HH:mm:ss";
-    const TIME_ZONE = "America/Sao_Paulo";
+const getCurrentDateTime: Function = (): string => {
+    const DATA_TIME_FORMAT: string = "DD/MM/yyyy HH:mm:ss";
+    const TIME_ZONE: string = "America/Sao_Paulo";
 
     return moment().tz(TIME_ZONE).format(DATA_TIME_FORMAT);
 };
 
-const logger = pino({
+const logger: Logger = pino({
     name: "upload example",
     level: "info",
     timestamp: () => `,"time":"${getCurrentDateTime()}"`,
     prettyPrint: {
         colorize: true,
         levelFirst: true,
-        sync: true,
         timestampKey: "time",
         messageKey: "msg",
-        levelFirst: false,
     },
 });
 
-module.exports = logger;
+export default logger;

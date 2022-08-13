@@ -1,9 +1,10 @@
-const routes = require("express").Router();
-const postController = require("./controller/PostController");
+import { Router } from "express";
+import postController from "./controller/PostController";
 
+const routes: Router = Router();
 routes.get("/posts", postController.findAll);
 routes.post("/posts", postController.uploadFile);
 routes.delete("/posts/:id", postController.deleteById);
 routes.all("*", postController.notFound);
 
-module.exports = routes;
+export default routes;
