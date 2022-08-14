@@ -11,7 +11,7 @@ const getCurrentDateTime: Function = (): string => {
 const logger: Logger = pino({
     name: "upload example",
     level: "info",
-    timestamp: () => `,"time":"${getCurrentDateTime()}"`,
+    timestamp: (): string => `,"time":"${getCurrentDateTime()}"`,
     prettyPrint: {
         colorize: true,
         levelFirst: true,

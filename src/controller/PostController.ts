@@ -3,14 +3,11 @@ import multer from "multer";
 import { Logger } from "pino";
 import multerConfig from "../config/multer";
 import Post, { PostInteface } from "../models/Post";
+import { localStorageService } from "../services/LocalStorageService";
+import { s3StorageService } from "../services/S3StorageService";
 import Utils from "../utils/Utils";
-import aws from "aws-sdk";
-import { promisify } from "util";
-import fs from "fs";
-import path from "path";
 
 const logger: Logger = Utils.getLoggerWithPathFile(__filename);
-const s3 = new aws.S3();
 
 class PostController {
     public async findAll(req: Request, res: Response): Promise<Response> {
@@ -19,7 +16,7 @@ class PostController {
         return res.json(posts);
     }
 
-    public async uploadFile(req: Request, res: Response) {
+    public async uploadFile(req: Request, res: Response): Promise<void> {
         const uploadedMulter: RequestHandler =
             multer(multerConfig).single("file");
 
@@ -37,7 +34,7 @@ class PostController {
                             `Tipo de arquivo não permitido. Somente é aceito arquivos do tipo .jpg, .jpeg, .png e .gif.`
                         );
                     }
-
+                    console.log(req.file);
                     const {
                         originalname: name,
                         size,
@@ -80,21 +77,9 @@ class PostController {
 
             if (post.$isDeleted()) {
                 if (process.env.STORAGE_TYPE === "s3") {
-                    s3.deleteObject({
-                        Bucket: <string>process.env.BUCKET_NAME,
-                        Key: <string>key,
-                    }).promise();
+                    s3StorageService.deleteFile(<string>key);
                 } else {
-                    promisify(fs.unlink)(
-                        path.resolve(
-                            __dirname,
-                            "..",
-                            "..",
-                            "tmp",
-                            "uploads",
-                            <string>key
-                        )
-                    );
+                    localStorageService.deleteFile(<string>key);
                 }
             }
 

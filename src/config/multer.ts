@@ -1,20 +1,29 @@
-import { S3Client } from "@aws-sdk/client-s3";
+import {
+    AwsConfig,
+    CallbackDestination,
+    CallbackFileFilter,
+    CallbackFilename,
+    CallbackKey,
+} from "./../utils/types/types";
+import aws, { S3 } from "aws-sdk";
 import crypto from "crypto";
 import { Request } from "express";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import path from "path";
 import Utils from "../utils/Utils";
+import { S3Client } from "@aws-sdk/client-s3";
+import { StorageType } from "../utils/types/types";
 
-type CallbackDestination = (error: Error | null, destination: string) => void;
-type CallbackFilename = (error: Error | null, filename: string) => void;
-type CallbackKey = (error: Error | null, key?: string) => void;
-type CallbackFileFilter = (error: Error | null, accepted?: boolean) => void;
-
-type StorageType = {
-    local: multer.StorageEngine;
-    s3: multer.StorageEngine;
+const awsConfig: AwsConfig = {
+    credentials: {
+        accessKeyId: <string>process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: <string>process.env.AWS_SECRET_ACCESS_KEY,
+    },
+    region: <string>process.env.AWS_DEFAULT_REGION,
 };
+
+const s3 = new S3Client(awsConfig);
 
 const storageTypes: StorageType = {
     local: multer.diskStorage({
@@ -40,13 +49,7 @@ const storageTypes: StorageType = {
         },
     }),
     s3: multerS3({
-        s3: new S3Client({
-            credentials: {
-                accessKeyId: <string>process.env.AWS_ACCESS_KEY_ID,
-                secretAccessKey: <string>process.env.AWS_SECRET_ACCESS_KEY,
-            },
-            region: <string>process.env.AWS_DEFAULT_REGION,
-        }),
+        s3: s3,
         bucket: <string>process.env.BUCKET_NAME,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: "public-read",
@@ -66,10 +69,10 @@ const storageTypes: StorageType = {
     }),
 };
 
-const storageType: string = <string>process.env.STORAGE_TYPE;
+const storage: string = <string>process.env.STORAGE_TYPE;
 export default {
     dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
-    storage: storageTypes[`s3`],
+    storage: storageTypes[storage as keyof typeof storageTypes],
     limits: {
         fileSize: Utils.MAX_FILE_SIZE,
     },

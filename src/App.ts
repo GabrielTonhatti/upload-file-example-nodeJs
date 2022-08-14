@@ -1,3 +1,4 @@
+import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
@@ -26,6 +27,8 @@ class App {
             "/files",
             express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
         );
+        this._express.use(bodyParser.urlencoded({ extended: false }));
+        this._express.use(bodyParser.json());
     }
 
     private database(): void {
