@@ -1,9 +1,8 @@
 const Post = require("../models/Post");
-const Utils = require("../utils/Utils");
+const { MAX_FILE_SIZE_MB } = require("../utils/Utils");
 const multer = require("multer");
 const multerConfig = require("../config/multer");
-
-const logger = Utils.getLoggerWithPathFile(__filename);
+const logger = require("../config/logger");
 
 class PostController {
     async findAll(req, res) {
@@ -19,7 +18,7 @@ class PostController {
             try {
                 if (error instanceof multer.MulterError) {
                     throw new Error(
-                        `Tamanho máximo permitido para a imagem é de ${Utils.MAX_FILE_SIZE_MB}`
+                        `Tamanho máximo permitido para a imagem é de ${MAX_FILE_SIZE_MB}`
                     );
                 } else if (error) {
                     throw new Error(

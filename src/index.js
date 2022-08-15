@@ -1,14 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const morgan = require("morgan");
 const path = require("path");
 require("./config/database/Mongo");
 const routes = require("./routes");
-const Utils = require("./utils/Utils");
 const cors = require("cors");
+const logger = require("./config/logger");
 
 const app = express();
-const logger = Utils.getLoggerWithPathFile(__filename);
 
 app.use(cors());
 app.use(express.json());

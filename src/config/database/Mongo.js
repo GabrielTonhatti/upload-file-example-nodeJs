@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Utils = require("../../utils/Utils");
-
-const logger = Utils.getLoggerWithPathFile(__filename);
+const logger = require("../../config/logger");
 logger.info("Connecting to MongoDB...");
 
 /**
