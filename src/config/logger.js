@@ -18,7 +18,6 @@ const logger = pino({
         sync: true,
         timestampKey: "time",
         messageKey: "msg",
-        levelFirst: false,
         ignore: "filename",
     },
 });
